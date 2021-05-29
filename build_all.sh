@@ -14,7 +14,7 @@ $CONDA_PREFIX/envs/asp_deps/bin/cmake ..                   \
   -DASP_DEPS_DIR=$CONDA_PREFIX/envs/asp_deps               \
   -DCMAKE_VERBOSE_MAKEFILE=ON                              \
   -DCMAKE_INSTALL_PREFIX=$installDir
-make -j16
+make -j`nproc`
 make install
 popd
 
@@ -27,7 +27,7 @@ $CONDA_PREFIX/envs/asp_deps/bin/cmake ..                   \
   -DCMAKE_INSTALL_PREFIX=$installDir                       \
   -DVISIONWORKBENCH_INSTALL_DIR=$installDir                \
   -DBINARYBUILDER_INSTALL_DIR=$buildDir/BinaryBuilder
-make -j16
+make -j`nproc`
 make install
 popd
 
