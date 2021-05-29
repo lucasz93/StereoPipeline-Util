@@ -1,5 +1,5 @@
 #!/bin/sh
-buildDir=`pwd`/..
+buildDir=`pwd`
 installDir=$buildDir/install
 cd $buildDir
 
