@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../visionworkbench/src/vw"
+		},
+		{
+			"path": "../../StereoPipeline/src/asp"
+		},
+		{
+			"name": "ISIS3"
+			"path": "../../ISIS3/isis/src"
+		}
+	]
+}
