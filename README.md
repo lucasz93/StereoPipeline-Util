@@ -1,3 +1,3 @@
-TODO: Anaconda setup + kernel download?
-checkout.sh - Run this to checkout all source repos into the parent folder.
-build_all.sh - Build all packages.
+build_all.sh - Builds all NASA components. Doesn't build GCC offload compilers.
+checkout.sh - Downloads all NASA components.
+time_mro_ctx.sh - Benchmarks ASP for an MRO dataset.
