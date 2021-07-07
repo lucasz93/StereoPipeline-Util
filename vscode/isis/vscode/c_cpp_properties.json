@@ -4,8 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/home/mechsoft/miniconda3/envs/isis_deps/include/**",
-                "/home/mechsoft/src/ISIS3/isis/src/**"
+                "/home/mechsoft/miniconda3/envs/isis_deps/include/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

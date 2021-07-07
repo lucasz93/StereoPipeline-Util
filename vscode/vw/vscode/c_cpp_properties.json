@@ -3,10 +3,9 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**",
-                "/home/mechsoft/miniconda3/envs/asp_deps/include/**",
-                "/home/mechsoft/src/visionworkbench/src/**",
-                "/home/mechsoft/src/StereoPipeline/src/**"
+                "${workspaceFolder}/../**",
+                "${workspaceFolder}/../../../StereoPipeline/src/asp/**",
+                "/home/mechsoft/miniconda3/envs/asp_deps/include/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
