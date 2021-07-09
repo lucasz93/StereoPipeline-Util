@@ -15,7 +15,7 @@ git clone https://github.com/lucasz93/BinaryBuilder.git
 
 git clone https://github.com/lucasz93/ISIS3.git
 pushd ISIS3
-git checkout 4.4_omp
+git checkout 4.1_omp
 git submodule update --init --recursive
 popd
 
