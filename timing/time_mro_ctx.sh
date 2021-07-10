@@ -4,11 +4,11 @@
 #
 
 left="P02_001981_1823_XI_02N356W.IMG"
-left_url="http://pds-imaging.jpl.nasa.gov/pds/prod?q=OFSN+%3D+data/mro/mars_reconnaissance_orbiter/ctx/mrox_0031/data/P02_001981_1823_XI_02N356W.IMG+AND+RT+%3D+RAW"
+left_url="https://pds-imaging.jpl.nasa.gov/data/mro/mars_reconnaissance_orbiter/ctx/mrox_0031/data/P02_001981_1823_XI_02N356W.IMG"
 left_calibrated=$left.cal.cub
 
 right="P03_002258_1817_XI_01N356W.IMG"
-right_url="http://pds-imaging.jpl.nasa.gov/pds/prod?q=OFSN+%3D+data/mro/mars_reconnaissance_orbiter/ctx/mrox_0042/data/P03_002258_1817_XI_01N356W.IMG+AND+RT+%3D+RAW"
+right_url="https://pds-imaging.jpl.nasa.gov/data/mro/mars_reconnaissance_orbiter/ctx/mrox_0042/data/P03_002258_1817_XI_01N356W.IMG"
 right_calibrated=$right.cal.cub
 
 #
@@ -34,7 +34,8 @@ mkdir results
 download_dependency()
 {
 	if [ ! -f $1 ]; then
-		wget -O $1 $2
+		# To get the best speeds, 'n' should be no more than necessary to saturate the connection.
+		prof download axel -a -n 8 -o "$1" "$2"
 	fi	
 }
 
@@ -60,7 +61,7 @@ convert_to_cube $right $right_calibrated
 #
 # Map project the data.
 #
-#prof cam2map4stereo cam2map4stereo.py $left_calibrated $right_calibrated
+prof cam2map4stereo cam2map4stereo.py $left_calibrated $right_calibrated
 
 #
 # Run stereo steps.
@@ -81,6 +82,7 @@ prof point2dem point2dem -r mars --nodata -32767 tmp/out-PC.tif --threads `nproc
 # Output table.
 #
 echo "Stage	Time	CPU"
+echo "download	`cat results/download`"
 echo "mroctx2isis	`cat results/mroctx2isis`"
 echo "spiceinit	`cat results/spiceinit`"
 echo "ctxcal	`cat results/ctxcal`"
