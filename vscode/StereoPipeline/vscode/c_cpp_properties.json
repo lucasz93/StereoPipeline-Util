@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/../**",
                 "${workspaceFolder}/../../../visionworkbench/src/**",
+                "${workspaceFolder}/../../../install/include/**",
                 "/home/mechsoft/miniconda3/envs/asp_deps/include/**"
             ],
             "defines": [],

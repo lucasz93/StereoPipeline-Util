@@ -4,7 +4,6 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/../**",
-                "${workspaceFolder}/../../../StereoPipeline/src/asp/**",
                 "/home/mechsoft/miniconda3/envs/asp_deps/include/**"
             ],
             "defines": [],

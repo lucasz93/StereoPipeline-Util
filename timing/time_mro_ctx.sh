@@ -60,23 +60,22 @@ convert_to_cube $right $right_calibrated
 #
 # Map project the data.
 #
-prof cam2map4stereo cam2map4stereo.py $left_calibrated $right_calibrated
+#prof cam2map4stereo cam2map4stereo.py $left_calibrated $right_calibrated
 
 #
 # Run stereo steps.
 #
 prof pprc stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --entry-point 0 --stop-point 1
 prof corr stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --entry-point 1 --stop-point 2
-prof rfne stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --entry-point 2 --stop-point 3
-prof fltr stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --entry-point 3 --stop-point 4
-prof tri  stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --entry-point 4 --stop-point 5
+#prof blend stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --entry-point 2 --stop-point 3
+prof rfne stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --entry-point 3 --stop-point 4
+prof fltr stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --entry-point 4 --stop-point 5
+prof tri  stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --entry-point 5 --stop-point 6
 
 #
 # Convert to DEM.
 #
-pushd tmp
-prof point2dem point2dem -r mars --nodata -32767 out-PC.tif --error --orthoimage out-L.tif
-popd
+prof point2dem point2dem -r mars --nodata -32767 tmp/out-PC.tif --threads `nproc` --error --orthoimage tmp/out-L.tif
 
 #
 # Output table.

@@ -1,9 +1,11 @@
 #!/bin/bash
 
 restore_proj()
-{	
+{
+	mkdir $1/.vscode
+
 	# Copy VSCode config.
-	cp -r $2/vscode $1/.vscode
+	cp $2/vscode/c_cpp_properties.json $1/.vscode/c_cpp_properties.json
 }
 
 restore_proj "../../visionworkbench/src/vw" "vw"

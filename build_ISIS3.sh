@@ -22,5 +22,9 @@ make -j`nproc`
 make install
 conda deactivate
 
+# ISIS installs its headers to /include/isis3, but the conda package is
+# distributed in /include/isis. Add a symbolic link so our packages don't break.
+ln -s $installDir/include/isis3 $installDir/include/isis
+
 popd
 

@@ -5,9 +5,10 @@ backup_proj()
 	# Clear old backups.
 	rm -rf $2
 	mkdir $2
-	
+	mkdir $2/vscode
+		
 	# Copy VSCode config.
-	cp -r $1/.vscode $2/vscode
+	cp $1/.vscode/c_cpp_properties.json $2/vscode/c_cpp_properties.json
 }
 
 backup_proj "../../visionworkbench/src/vw" "vw"
