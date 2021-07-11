@@ -1,7 +1,7 @@
 #!/bin/sh
 rootDir=`pwd`/..
 
-pushd $rootDir/visionworkbench/build
+pushd $rootDir/StereoPipeline/build
 
 make install -j `nproc`
 
