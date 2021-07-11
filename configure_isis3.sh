@@ -2,11 +2,14 @@
 rootDir=`pwd`/..
 installDir=$rootDir/install
 
-if [ -n $1 ]; then
-	buildType="-DCMAKE_BUILD_TYPE=$1"
-else
+if [ -z $1 ]; then
 	buildType=""
+else
+	buildType="-DCMAKE_BUILD_TYPE=$1"
 fi
+
+echo $buildType
+exit 0
 
 pushd $rootDir/ISIS3
 mkdir -p build

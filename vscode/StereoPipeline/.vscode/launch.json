@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "stereo_tri",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/home/mechsoft/src/install/bin/stereo_tri",
+            //"args": ["/asp_scratch/CTX/P02_001981_1823_XI_02N356W.IMG.cal.cub", "/asp_scratch/CTX/P03_002258_1817_XI_01N356W.IMG.cal.cub", "/tmp/out", "--tif-compress", "None", "-s", "stereo.map", "--entry-point 5", "--stop-point 6"],
+            "args": [],
+            "stopAtEntry": true,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}

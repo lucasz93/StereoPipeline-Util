@@ -20,3 +20,7 @@ bash build_isis3.sh
 bash configure_stereopipeline.sh $1
 bash build_stereopipeline.sh
 
+# Setup VSCode.
+pushd vscode
+bash config.sh restore
+popd
