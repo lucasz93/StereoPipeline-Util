@@ -5,12 +5,12 @@
 rootDir=`pwd`/..
 installDir=$rootDir/install
 
-case $1 in
+case $2 in
 	"Debug" ) ;&
 	"MinSizeRel" ) ;&
 	"RelWithDebInfo" ) ;&
 	"Release" )
-		buildType="-DCMAKE_BUILD_TYPE=$1"
+		buildType="-DCMAKE_BUILD_TYPE=$2"
 		;;
 	* )
 		buildType=""
@@ -97,6 +97,11 @@ case "$1" in
 	"isis" ) configure_isis3 "$2" ;;
 	"asp" ) configure_stereopipeline "$2" ;;
 	"vw" ) configure_visionworkbench "$2" ;;
+	"all" ) 
+		configure_visionworkbench "$2"
+		configure_isis3 "$2"
+		configure_stereopipeline "$2"
+		;;
 	* ) 
 		echo "configure: Unknown target '$2'"
 		exit 1
