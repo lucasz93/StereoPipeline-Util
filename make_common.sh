@@ -72,25 +72,54 @@ make_f2c()
 #===============================================================================
 make_cspice_src()
 {
+	declare -A dirs=( 
+		["brief"]="brief_c"
+		["chronos"]="chrnos_c"
+		["ckbrief"]="ckbref_c"
+		["commnt"]="commnt_c"
+		#["cookbook"]="cook_c"		<<< Ignore this dir. It's full of example code that we don't want to overwrite.
+		["dskbrief"]="dskbrief_c"
+		["dskexp"]="dskexp_c"
+		["frmdiff"]="frmdif_c"
+		["inspekt"]="inspkt_c"
+		["mkdsk"]="mkdsk_c"
+		["mkspk"]="mkspk_c"
+		["msopck"]="msopck_c"
+		["spacit"]="spacit_c"
+		["spkdiff"]="spkdif_c"
+		["spkmerge"]="spkmrg_c"
+		["tobin"]="tobin_c"
+		["toxfr"]="toxfr_c"
+		["version"]="versn_c"
+	)
+
 	fsrc="$rootDir/naif-toolkit/src"
 	csrc="$rootDir/naif-cspice/src"
 
 	# Get the name of each source subdirectory.
 	# Iterate through the CSPICE src dirs, so we know which Toolkit dirs to parse.
-	for out_dir in `find "$csrc" -maxdepth 1 -mindepth 1 -type d -printf '%f\n' | sort`
-	do
-		# Toolkit has src/x
-		# CSPICE has  src/x_c
-		# Strip the '_c'.
-		in_dir="$fsrc/${out_dir%_c}"
-		
-		if [ ! -d "$in_dir" ]; then
-			continue
-		fi
-		
-		# Go to the input dir, and write to the output dir.
-		pushd $in_dir
-			f2c -u -C -a -A -!bs -d$csrc/$out_dir *.f
+	for in in "${!dirs[@]}"; do
+		pushd "$fsrc/$in"
+			# Create a copy of all PGM source files with a Fortran extension.
+			# f2c doesn't want to touch PGM files, and the original CSPICE
+			# source code seems to indicate NAIF just renamed them as well.
+			pgms=`find . -maxdepth 1 -mindepth 1 -printf '%f\n' | grep "pgm" | sort`
+			echo "### $pgms"
+			for pgm in $pgms; do
+				cp "$pgm" "${pgm%.pgm}.f"
+			done
+
+			# Convert all the files.
+			out_dir="$csrc/${dirs[$in]}"
+			f2c -u -C -a -A -!bs -d$out_dir *.f
+			
+			# Delete the PGM copies, and rename their C files to PGM as well.
+			# No idea why, NAIF just did that.
+			for pgm in $pgms; do
+				extensionless_pgm="${pgm%.pgm}"
+				rm "$extensionless_pgm.f"
+				mv "$out_dir/$extensionless_pgm.c" "$out_dir/$pgm"
+			done
 		popd
 	done
 }

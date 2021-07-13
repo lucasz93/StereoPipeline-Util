@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # This is basically the example makefile (StereoPipeline/examples/CTX/Makefile), but made generic with timing information.
 #

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ $# -ne 2 ]; then
 	echo "./build_nvptx_gcc [work_dir] [install_dir]"

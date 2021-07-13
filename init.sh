@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # StereoPipeline config fails if it can't find the visionworkbench or ISIS binaries.
 # So this script configures and builds everything in the right order.
