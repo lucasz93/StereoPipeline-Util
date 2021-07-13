@@ -53,6 +53,60 @@ make_stereopipeline()
 }
 
 #===============================================================================
+#===============================================================================
+make_f2c()
+{
+	pushd $rootDir/f2c/src
+
+	make
+	
+	if [ "$1" = "install" ]; then
+		cp f2c ../../install/bin
+	fi
+
+	popd
+}
+
+#===============================================================================
+# Converts the Fortran naif-toolbox code to C using f2c.
+#===============================================================================
+make_cspice_src()
+{
+	fsrc="$rootDir/naif-toolkit/src"
+	csrc="$rootDir/naif-cspice/src"
+
+	# Get the name of each source subdirectory.
+	# Iterate through the CSPICE src dirs, so we know which Toolkit dirs to parse.
+	for out_dir in `find "$csrc" -maxdepth 1 -mindepth 1 -type d -printf '%f\n' | sort`
+	do
+		# Toolkit has src/x
+		# CSPICE has  src/x_c
+		# Strip the '_c'.
+		in_dir="$fsrc/${out_dir%_c}"
+		
+		if [ ! -d "$in_dir" ]; then
+			continue
+		fi
+		
+		# Go to the input dir, and write to the output dir.
+		pushd $in_dir
+			f2c -u -C -a -A -!bs -d$csrc/$out_dir *.f
+		popd
+	done
+}
+
+#===============================================================================
+#===============================================================================
+make_cspice()
+{
+	pushd $rootDir/naif-cspice
+	
+	csh makeall.csh
+	
+	popd
+}
+
+#===============================================================================
 # $1 = script name
 # $2 = target
 # $3 = directive
@@ -60,16 +114,22 @@ make_stereopipeline()
 make_project()
 {
 	if [ -z $2 ]; then
-		echo "./$1.sh [all|isis|asp|vw]"
+		echo "./$1.sh [f2c|vw|isis|asp|cspice_src|cspice|all]"
 		exit 1
 	fi
 
 	case "$2" in
+		"f2c" ) make_f2c "$3" ;;
+		"cspice_src" ) make_cspice_src "$3" ;;
+		"cspice" ) make_cspice "$3" ;;
 		"vw" ) make_visionworkbench "$3" ;;
 		"isis" ) make_isis3 "$3" ;;
 		"asp" ) make_stereopipeline "$3" ;;
 		"all" )
-			# Order is significant.
+			make_f2c $3
+		
+			# Order of these is significant.
+			# Each relies on the predecessor.
 			make_visionworkbench "$3"
 			make_isis3 "$3"
 			make_stereopipeline "$3"

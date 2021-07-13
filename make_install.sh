@@ -2,5 +2,8 @@
 
 source ./make_common.sh
 
-make_project "make_install" "$1" "install"
+for target in "$@"
+do
+	make_project "make_install" "$target" "install"
+done
 

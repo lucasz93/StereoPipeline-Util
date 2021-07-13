@@ -2,5 +2,8 @@
 
 source ./make_common.sh
 
-make_project "make" "$1" ""
+for target in "$@"
+do
+	make_project "make" "$target" ""
+done
 
