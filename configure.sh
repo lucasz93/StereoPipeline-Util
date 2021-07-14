@@ -51,6 +51,8 @@ configure_isis3()
 	  -Disis3TestData=$ISISTESTDATA                             \
 	  -DCMAKE_INSTALL_MESSAGE=LAZY                              \
 	  -DCMAKE_INSTALL_PREFIX=$installDir                        \
+	  -DOVERRIDE_CSPICE_INCLUDE_DIR=$installDir/include         \
+	  -DOVERRIDE_CSPICE_LIB_DIR=$installDir/lib                 \
 	  $buildType                        
 
 	# Ensure the install dir exists.
@@ -81,6 +83,7 @@ configure_stereopipeline()
 	  -DASP_DEPS_DIR=$CONDA_PREFIX/envs/asp_deps               \
 	  -DVISIONWORKBENCH_INSTALL_DIR=$installDir                \
 	  -DISIS_INSTALL_DIR=$installDir                           \
+ 	  -DCSPICE_INSTALL_DIR=$installDir                         \
 	  -DBINARYBUILDER_INSTALL_DIR=$rootDir/BinaryBuilder       \
 	  -DCMAKE_INSTALL_MESSAGE=LAZY                             \
 	  -DCMAKE_INSTALL_PREFIX=$installDir                       \

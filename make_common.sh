@@ -31,9 +31,6 @@ make_isis3()
 
 	# ISIS installs its headers to /include/isis3, but the conda package is
 	# distributed in /include/isis. Add a symbolic link so our packages don't break.
-	if [ ! -f $installDir/include/isis3 ]; then
-		mkdir -p $installDir/include/isis3
-	fi
 	if [ ! -L $installDir/include/isis ]; then
 		ln -s $installDir/include/isis3 $installDir/include/isis
 	fi
@@ -61,7 +58,7 @@ make_f2c()
 	make
 	
 	if [ "$1" = "install" ]; then
-		cp f2c ../../install/bin
+		cp f2c $installDir/bin
 	fi
 
 	popd
@@ -86,32 +83,42 @@ make_cspice_src()
 		["mkspk"]="mkspk_c"
 		["msopck"]="msopck_c"
 		["spacit"]="spacit_c"
+		["spicelib"]="cspice"
 		["spkdiff"]="spkdif_c"
 		["spkmerge"]="spkmrg_c"
+		["support"]="csupport"
 		["tobin"]="tobin_c"
 		["toxfr"]="toxfr_c"
 		["version"]="versn_c"
 	)
 
 	fsrc="$rootDir/naif-toolkit/src"
-	csrc="$rootDir/naif-cspice/src"
+	csrc="$rootDir/cspice/src"
+
+	# Files that w're not converting, because they were completely rewritten.
+	blacklist='byebye.f|dpmax.f|dpmin.f|intmax.f|intmin.f|moved.f|zzcputim.f|zzgfdsps.f|getcml.f'
 
 	# Get the name of each source subdirectory.
 	# Iterate through the CSPICE src dirs, so we know which Toolkit dirs to parse.
 	for in in "${!dirs[@]}"; do
 		pushd "$fsrc/$in"
+			# Rename blacklisted files.
+			ignore=`find . -maxdepth 1 -mindepth 1 -printf '%f\n' | egrep "$blacklist" | sort`
+			for i in $ignore; do
+				mv "$i" "$i.no"
+			done
+			
 			# Create a copy of all PGM source files with a Fortran extension.
 			# f2c doesn't want to touch PGM files, and the original CSPICE
 			# source code seems to indicate NAIF just renamed them as well.
 			pgms=`find . -maxdepth 1 -mindepth 1 -printf '%f\n' | grep "pgm" | sort`
-			echo "### $pgms"
 			for pgm in $pgms; do
 				cp "$pgm" "${pgm%.pgm}.f"
 			done
 
 			# Convert all the files.
 			out_dir="$csrc/${dirs[$in]}"
-			f2c -u -C -a -A -!bs -d$out_dir *.f
+			f2c -u -C -a -A -!bs -d$out_dir -tls *.f
 			
 			# Delete the PGM copies, and rename their C files to PGM as well.
 			# No idea why, NAIF just did that.
@@ -120,6 +127,11 @@ make_cspice_src()
 				rm "$extensionless_pgm.f"
 				mv "$out_dir/$extensionless_pgm.c" "$out_dir/$pgm"
 			done
+			
+			# Undo the blacklist.
+			for i in $ignore; do
+				mv "$i.no" "$i"
+			done
 		popd
 	done
 }
@@ -127,10 +139,17 @@ make_cspice_src()
 #===============================================================================
 #===============================================================================
 make_cspice()
-{
-	pushd $rootDir/naif-cspice
+{	
+	pushd $rootDir/cspice-feedstock/recipe
 	
-	csh makeall.csh
+	export SRC_DIR=$rootDir/cspice
+	export CC=gcc
+	export PREFIX=$installDir
+	
+	rm $installDir/lib/cspice.a
+	rm $installDir/lib/csupport.a
+	rm $installDir/lib/libcspice.so
+	bash build.sh
 	
 	popd
 }

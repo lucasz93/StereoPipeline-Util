@@ -12,7 +12,13 @@ git checkout naif_tls
 popd
 
 git clone https://github.com/lucasz93/naif-toolkit.git
-git clone https://github.com/lucasz93/naif-cspice.git
+
+git clone https://github.com/lucasz93/cspice.git
+pushd cspice
+git checkout naif-tls
+popd
+
+git clone https://github.com/lucasz93/cspice-feedstock.git
 
 #-------------------------------------------------------------------------------
 # ACTUAL PROGRAMS
