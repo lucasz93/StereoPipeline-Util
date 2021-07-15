@@ -21,6 +21,8 @@ bash checkout.sh
 bash configure.sh $1 vw
 bash make_install.sh vw
 
+bash make_install.sh f2c
+bash make_install.sh cspice_src
 bash make_install.sh cspice
 
 # Building ISIS is a 2 pass process, for some reason.

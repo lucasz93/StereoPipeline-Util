@@ -8,12 +8,12 @@ installDir=$rootDir/install
 build_type=$1
 shift
 
-case build_type in
+case $build_type in
 	"Debug" ) ;&
 	"MinSizeRel" ) ;&
 	"RelWithDebInfo" ) ;&
 	"Release" )
-		buildType="-DCMAKE_BUILD_TYPE=build_type"
+		buildType="-DCMAKE_BUILD_TYPE=$build_type"
 		;;
 	* )
 		buildType=""
@@ -110,27 +110,23 @@ configure_f2c()
 
 #===============================================================================
 #===============================================================================
-if [ -z $1 ]; then
-	echo "./configure.sh [f2c|vw|isis|asp|all]"
-	exit 1
-fi
-
 for target in "$@"
 	do
 	case "$target" in
-		"f2c" ) configure_f2c "build_type" ;;
-		"vw" ) configure_visionworkbench "build_type" ;;
-		"isis" ) configure_isis3 "build_type" ;;
-		"asp" ) configure_stereopipeline "build_type" ;;
+		"f2c" ) configure_f2c "$build_type" ;;
+		"vw" ) configure_visionworkbench "$build_type" ;;
+		"isis" ) configure_isis3 "$build_type" ;;
+		"asp" ) configure_stereopipeline "bui$build_typeld_type" ;;
 		"all" )
-			configure_f2c "build_type"
+			configure_f2c "$build_type"
 			
-			configure_visionworkbench "build_type"
-			configure_isis3 "build_type"
-			configure_stereopipeline "build_type"
+			configure_visionworkbench "$build_type"
+			configure_isis3 "$build_type"
+			configure_stereopipeline "$build_type"
 			;;
 		* ) 
-			echo "configure: Unknown target 'build_type'"
+			echo "configure: Unknown target '$build_type'"
+			echo "./configure.sh [f2c|vw|isis|asp|all]"
 			exit 1
 			;;
 	esac

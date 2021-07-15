@@ -161,11 +161,6 @@ make_cspice()
 #===============================================================================
 make_project()
 {
-	if [ -z $2 ]; then
-		echo "./$1.sh [f2c|vw|isis|asp|cspice_src|cspice|all]"
-		exit 1
-	fi
-
 	case "$2" in
 		"f2c" ) make_f2c "$3" ;;
 		"cspice_src" ) make_cspice_src "$3" ;;
@@ -184,6 +179,7 @@ make_project()
 			;;
 		* ) 
 			echo "$1: Unknown target '$2'"
+			echo "./$1.sh [f2c|vw|isis|asp|cspice_src|cspice|all]"
 			exit 1
 			;;
 	esac
