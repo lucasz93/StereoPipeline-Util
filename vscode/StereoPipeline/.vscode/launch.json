@@ -5,11 +5,106 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "stereo_tri",
+            "name": "2. stereo_pprc",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/home/mechsoft/src/install/bin/stereo_pprc",
+            "args": ["/asp_scratch/CTX/P02_001981_1823_XI_02N356W.IMG.cal.cub", "/asp_scratch/CTX/P03_002258_1817_XI_01N356W.IMG.cal.cub", "/asp_scratch/CTX/tmp/out", "--tif-compress", "None", "-s", "stereo.map"],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "3. stereo_corr",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/home/mechsoft/src/install/bin/stereo_corr",
+            "args": ["/asp_scratch/CTX/P02_001981_1823_XI_02N356W.IMG.cal.cub", "/asp_scratch/CTX/P03_002258_1817_XI_01N356W.IMG.cal.cub", "/asp_scratch/CTX/tmp/out", "--tif-compress", "None", "-s", "stereo.map"],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "5. stereo_rfne",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/home/mechsoft/src/install/bin/stereo_rfne",
+            "args": ["/asp_scratch/CTX/P02_001981_1823_XI_02N356W.IMG.cal.cub", "/asp_scratch/CTX/P03_002258_1817_XI_01N356W.IMG.cal.cub", "/asp_scratch/CTX/tmp/out", "--tif-compress", "None", "-s", "stereo.map"],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "6. stereo_fltr",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/home/mechsoft/src/install/bin/stereo_fltr",
+            "args": ["/asp_scratch/CTX/P02_001981_1823_XI_02N356W.IMG.cal.cub", "/asp_scratch/CTX/P03_002258_1817_XI_01N356W.IMG.cal.cub", "/asp_scratch/CTX/tmp/out", "--tif-compress", "None", "-s", "stereo.map"],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "7. stereo_tri",
             "type": "cppdbg",
             "request": "launch",
             "program": "/home/mechsoft/src/install/bin/stereo_tri",
             "args": ["/asp_scratch/CTX/P02_001981_1823_XI_02N356W.IMG.cal.cub", "/asp_scratch/CTX/P03_002258_1817_XI_01N356W.IMG.cal.cub", "/asp_scratch/CTX/tmp/out", "--tif-compress", "None", "-s", "stereo.map"],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "8. point2dem",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/home/mechsoft/src/install/bin/stereo_tri",
+            "args": ["-r", "mars", "--nodata", "-32767", "/asp_scratch/CTX/tmp/out-PC.tif", "--threads", "4", "--error", "--orthoimage", "/asp_scratch/CTX/tmp/out-L.tif"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],

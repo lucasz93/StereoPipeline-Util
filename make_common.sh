@@ -9,7 +9,7 @@ make_visionworkbench()
 {
 	pushd $rootDir/visionworkbench/build
 
-	ninja $1 -j `nproc`
+	ninja $1 -j `distcc -j`
 
 	popd
 }
@@ -26,7 +26,7 @@ make_isis3()
 
 	source $HOME/miniconda3/etc/profile.d/conda.sh
 	conda activate isis_deps
-	ninja $1 -j `nproc`
+	ninja $1 -j `distcc -j`
 	conda deactivate
 
 	# ISIS installs its headers to /include/isis3, but the conda package is
@@ -44,7 +44,7 @@ make_stereopipeline()
 {
 	pushd $rootDir/StereoPipeline/build
 
-	ninja $1 -j `nproc`
+	ninja $1 -j `distcc -j`
 
 	popd
 }
@@ -55,9 +55,11 @@ make_f2c()
 {
 	pushd $rootDir/f2c/src
 
-	make
+	make -j `nproc`
 	
 	if [ "$1" = "install" ]; then
+		mkdir -p $installDir/bin
+		
 		cp f2c $installDir/bin
 	fi
 
@@ -142,14 +144,10 @@ make_cspice()
 {	
 	pushd $rootDir/cspice-feedstock/recipe
 	
-	export SRC_DIR=$rootDir/cspice
-	export CC=gcc
-	export PREFIX=$installDir
-	
 	rm $installDir/lib/cspice.a
 	rm $installDir/lib/csupport.a
 	rm $installDir/lib/libcspice.so
-	bash build.sh
+	CC="ccache gcc" SRC_DIR=$rootDir/cspice PREFIX=$installDir bash build.sh
 	
 	popd
 }
@@ -169,7 +167,8 @@ make_project()
 		"isis" ) make_isis3 "$3" ;;
 		"asp" ) make_stereopipeline "$3" ;;
 		"all" )
-			make_f2c $3
+			make_f2c "$3"
+			make_cspice "$3"
 		
 			# Order of these is significant.
 			# Each relies on the predecessor.

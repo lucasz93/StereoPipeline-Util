@@ -23,8 +23,8 @@ checkout_branch()
 #-------------------------------------------------------------------------------
 checkout_branch "https://github.com/lucasz93/f2c.git" "f2c" "naif_tls"
 checkout_branch "https://github.com/lucasz93/naif-toolkit.git" "naif-toolkit" "master"
-checkout_branch "https://github.com/lucasz93/cspice.git" "cspice" "naif-tls"
-checkout_branch "https://github.com/lucasz93/cspice-feedstock.git" "cspice-feedstock" "master"
+checkout_branch "https://github.com/lucasz93/cspice.git" "cspice" "dev"
+checkout_branch "https://github.com/lucasz93/cspice-feedstock.git" "cspice-feedstock" "dev"
 
 #-------------------------------------------------------------------------------
 # ACTUAL PROGRAMS

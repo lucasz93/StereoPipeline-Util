@@ -21,7 +21,9 @@ bash checkout.sh
 bash configure.sh $1 vw
 bash make_install.sh vw
 
+bash configure.sh $1 f2c
 bash make_install.sh f2c
+
 bash make_install.sh cspice_src
 bash make_install.sh cspice
 
@@ -39,3 +41,6 @@ bash make_install.sh asp
 pushd vscode
 bash config.sh restore
 popd
+
+mkdir -p ~/.distcc
+cp distcc/hosts ~/.distcc/

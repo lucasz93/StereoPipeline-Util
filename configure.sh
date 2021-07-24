@@ -5,6 +5,8 @@
 rootDir=`pwd`/..
 installDir=$rootDir/install
 
+installMessage=NEVER
+
 build_type=$1
 shift
 
@@ -30,8 +32,12 @@ configure_visionworkbench()
 
 	$HOME/miniconda3/envs/asp_deps/bin/cmake .. -GNinja        \
 	  -DASP_DEPS_DIR=$CONDA_PREFIX/envs/asp_deps               \
-	  -DCMAKE_INSTALL_MESSAGE=LAZY                             \
+	  -DCMAKE_INSTALL_MESSAGE=$installMessage                  \
 	  -DCMAKE_INSTALL_PREFIX=$installDir                       \
+	  -DDEBUG_INFO_LEVEL="-ggdb3"                              \
+	  -DCMAKE_C_COMPILER_LAUNCHER="/usr/bin/ccache"            \
+	  -DCMAKE_CXX_COMPILER_LAUNCHER="/usr/bin/ccache"          \
+	  -DCMAKE_CXX_FLAGS="-fuse-ld=lld"                         \
 	  $buildType
 
 	popd
@@ -49,10 +55,14 @@ configure_isis3()
 	  -DJP2KFLAG=OFF                                            \
 	  -Disis3Data=$ISISDATA                                     \
 	  -Disis3TestData=$ISISTESTDATA                             \
-	  -DCMAKE_INSTALL_MESSAGE=LAZY                              \
+	  -DCMAKE_INSTALL_MESSAGE=$installMessage                   \
 	  -DCMAKE_INSTALL_PREFIX=$installDir                        \
 	  -DOVERRIDE_CSPICE_INCLUDE_DIR=$installDir/include         \
 	  -DOVERRIDE_CSPICE_LIB_DIR=$installDir/lib                 \
+	  -DDEBUG_INFO_LEVEL="-ggdb3"                               \
+	  -DCMAKE_C_COMPILER_LAUNCHER="/usr/bin/ccache"             \
+	  -DCMAKE_CXX_COMPILER_LAUNCHER="/usr/bin/ccache"           \
+	  -DUSE_LD="-fuse-ld=lld"                                   \
 	  $buildType                        
 
 	# Ensure the install dir exists.
@@ -85,8 +95,12 @@ configure_stereopipeline()
 	  -DISIS_INSTALL_DIR=$installDir                           \
  	  -DCSPICE_INSTALL_DIR=$installDir                         \
 	  -DBINARYBUILDER_INSTALL_DIR=$rootDir/BinaryBuilder       \
-	  -DCMAKE_INSTALL_MESSAGE=LAZY                             \
+	  -DCMAKE_INSTALL_MESSAGE=$installMessage                  \
 	  -DCMAKE_INSTALL_PREFIX=$installDir                       \
+	  -DDEBUG_INFO_LEVEL="-ggdb3"                              \
+	  -DCMAKE_C_COMPILER_LAUNCHER="/usr/bin/ccache"            \
+	  -DCMAKE_CXX_COMPILER_LAUNCHER="/usr/bin/ccache"          \
+	  -DCMAKE_CXX_FLAGS="-fuse-ld=lld"                         \
 	  $buildType
 
 	popd
@@ -96,14 +110,9 @@ configure_stereopipeline()
 #===============================================================================
 configure_f2c()
 {
-	pushd $rootDir/f2c
-	mkdir -p build
-	cd build
-
-	$HOME/miniconda3/envs/asp_deps/bin/cmake .. -GNinja        \
-	  -DCMAKE_INSTALL_MESSAGE=LAZY                             \
-	  -DCMAKE_INSTALL_PREFIX=$installDir                       \
-	  $buildType
+	pushd $rootDir/f2c/src
+	
+	cp makefile.u makefile
 
 	popd
 }
@@ -116,7 +125,7 @@ for target in "$@"
 		"f2c" ) configure_f2c "$build_type" ;;
 		"vw" ) configure_visionworkbench "$build_type" ;;
 		"isis" ) configure_isis3 "$build_type" ;;
-		"asp" ) configure_stereopipeline "bui$build_typeld_type" ;;
+		"asp" ) configure_stereopipeline "$build_type" ;;
 		"all" )
 			configure_f2c "$build_type"
 			
