@@ -16,6 +16,14 @@ case $1 in
 		;;
 esac
 
+#
+# Set all scripts as executable.
+#
+chmod +x *.sh
+
+#
+# Ready this dir.
+#
 bash checkout.sh
 
 bash configure.sh $1 vw
@@ -42,5 +50,6 @@ pushd vscode
 bash config.sh restore
 popd
 
+# Setup distcc.
 mkdir -p ~/.distcc
 cp distcc/hosts ~/.distcc/
