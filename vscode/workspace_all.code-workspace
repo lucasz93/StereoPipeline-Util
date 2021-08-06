@@ -1,10 +1,15 @@
 {
 	"folders": [
 		{
-			"path": "../../visionworkbench/src/vw"
+			"path": "../../StereoPipeline/src/asp"
 		},
 		{
-			"path": "../../StereoPipeline/src/asp"
+			"name": "cspice",
+			"path": "../../cspice/src"
+		},
+		{
+			"name": "f2c",
+			"path": "../../f2c/src"
 		},
 		{
 			"name": "ISIS3",
@@ -13,6 +18,9 @@
 		{
 			"name": "util",
 			"path": ".."
+		},
+		{
+			"path": "../../visionworkbench/src/vw"
 		}
 	],
 	"settings": {
@@ -87,7 +95,24 @@
 			"*.ipp": "cpp",
 			"pthreadp.h": "c",
 			"pthread.h": "c",
-			"features.h": "c"
+			"features.h": "c",
+			"f2c.h": "c",
+			"ana.h": "c",
+			"zzxlated.h": "c",
+			"cspice.h": "c",
+			"gfevnt.h": "c",
+			"fndlun.h": "c",
+			"accept.h": "c",
+			"bltfrm.h": "c",
+			"bodvrd.h": "c",
+			"convrt.h": "c",
+			"mkdsk_c.h": "c",
+			"rdgrd5.h": "c",
+			"inspkt_c.h": "c",
+			"nspfnd.h": "c",
+			"inspkn.inl": "c",
+			"cspice_user.h": "c",
+			"cspice_user.inl": "c"
 		}
 	}
 }

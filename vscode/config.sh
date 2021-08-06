@@ -30,3 +30,4 @@ do_proj()
 do_proj "../../visionworkbench/src/vw" "vw"
 do_proj "../../StereoPipeline/src/asp" "StereoPipeline"
 do_proj "../../ISIS3/isis/src" "isis"
+do_proj "../../f2c/src" "f2c"

@@ -118,16 +118,29 @@ make_cspice_src()
 				cp "$pgm" "${pgm%.pgm}.f"
 			done
 
+			out_dir="${dirs[$in]}"
+
+			# Only the support libraries need the global state object.
+			# Plus, my f2c mod doesn't handle variable name clashes, which happens in the other programs.
+			# So instead of spending the time to fix clashes, YAGNI.
+			if [ "$out_dir" = "cspice" ] || [ "$out_dir" = "csupport" ]; then
+				wrap="-wrap -wrap-name$out_dir"
+			else
+				wrap=""
+			fi
+
+			echo $wrap
+
 			# Convert all the files.
-			out_dir="$csrc/${dirs[$in]}"
-			f2c -u -C -a -A -!bs -d$out_dir -tls *.f
+			out_path="$csrc/$out_dir"
+			f2c -u -C -a -A -!bs $wrap -d$out_path  *.f
 			
 			# Delete the PGM copies, and rename their C files to PGM as well.
 			# No idea why, NAIF just did that.
 			for pgm in $pgms; do
 				extensionless_pgm="${pgm%.pgm}"
 				rm "$extensionless_pgm.f"
-				mv "$out_dir/$extensionless_pgm.c" "$out_dir/$pgm"
+				mv "$out_path/$extensionless_pgm.c" "$out_path/$pgm"
 			done
 			
 			# Undo the blacklist.
