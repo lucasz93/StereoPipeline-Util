@@ -66,7 +66,7 @@ prof cam2map4stereo cam2map4stereo.py $left_calibrated $right_calibrated
 #
 # Run stereo steps.
 #
-prof pprc stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --entry-point 0 --stop-point 1
+prof pprc stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --threads `nproc` --entry-point 0 --stop-point 1
 prof corr stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --entry-point 1 --stop-point 2
 #prof blend stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --entry-point 2 --stop-point 3
 prof rfne stereo $left_calibrated $right_calibrated tmp/out --tif-compress None -s stereo.map --entry-point 3 --stop-point 4
