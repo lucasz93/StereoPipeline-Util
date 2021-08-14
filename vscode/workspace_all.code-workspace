@@ -112,7 +112,16 @@
 			"nspfnd.h": "c",
 			"inspkn.inl": "c",
 			"cspice_user.h": "c",
-			"cspice_user.inl": "c"
+			"cspice_user.inl": "c",
+			"__cspice_state.h": "c",
+			"cspice_state.h": "c",
+			"time.h": "c",
+			"f2cmang.h": "c",
+			"fmt.h": "c",
+			"zzerror.h": "c",
+			"fio.h": "c",
+			"errno.h": "c",
+			"cerrno": "c"
 		}
 	}
 }

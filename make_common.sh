@@ -123,13 +123,11 @@ make_cspice_src()
 			# Only the support libraries need the global state object.
 			# Plus, my f2c mod doesn't handle variable name clashes, which happens in the other programs.
 			# So instead of spending the time to fix clashes, YAGNI.
-			if [ "$out_dir" = "cspice" ] || [ "$out_dir" = "csupport" ]; then
+			if [ "$out_dir" = "cspice" ]; then
 				wrap="-wrap -wrap-name$out_dir"
 			else
 				wrap=""
 			fi
-
-			echo $wrap
 
 			# Convert all the files.
 			out_path="$csrc/$out_dir"
@@ -166,6 +164,21 @@ make_cspice()
 }
 
 #===============================================================================
+#===============================================================================
+make_deps()
+{
+	pushd $rootDir/isis3_dependencies
+
+	source $HOME/miniconda3/etc/profile.d/conda.sh
+	conda activate build_env
+	export CPU_COUNT=`nproc`
+	python bin/build_package.py qt -y --user mechsoft
+	conda deactivate
+	
+	popd
+}
+
+#===============================================================================
 # $1 = script name
 # $2 = target
 # $3 = directive
@@ -179,6 +192,7 @@ make_project()
 		"vw" ) make_visionworkbench "$3" ;;
 		"isis" ) make_isis3 "$3" ;;
 		"asp" ) make_stereopipeline "$3" ;;
+		"deps" ) make_deps "$3" ;;
 		"all" )
 			make_f2c "$3"
 			make_cspice "$3"
@@ -191,7 +205,7 @@ make_project()
 			;;
 		* ) 
 			echo "$1: Unknown target '$2'"
-			echo "./$1.sh [f2c|vw|isis|asp|cspice_src|cspice|all]"
+			echo "./$1.sh [f2c|vw|isis|asp|cspice_src|cspice|deps|all]"
 			exit 1
 			;;
 	esac

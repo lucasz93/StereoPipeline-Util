@@ -49,7 +49,7 @@ for target in "$@"
 	do
 	case "$target" in
 		"f2c" ) clean_f2c ;;
-		"cspice" ) clean cspice ;;
+		"cspice" ) clean_cspice ;;
 		"vw" ) clean_visionworkbench ;;
 		"isis" ) clean_isis3 ;;
 		"asp" ) clean_stereopipeline ;;

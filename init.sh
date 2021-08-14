@@ -26,6 +26,9 @@ chmod +x *.sh
 #
 bash checkout.sh
 
+# We keep all conda packages up to date.
+#bash make_install.sh conda
+
 bash configure.sh $1 vw
 bash make_install.sh vw
 

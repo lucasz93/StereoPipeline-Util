@@ -27,6 +27,11 @@ checkout_branch "https://github.com/lucasz93/cspice.git" "cspice" "dev"
 checkout_branch "https://github.com/lucasz93/cspice-feedstock.git" "cspice-feedstock" "dev"
 
 #-------------------------------------------------------------------------------
+# CUSTOM COMPILED DEPENDENCIES
+#-------------------------------------------------------------------------------
+checkout_branch "https://github.com/lucasz93/isis3_dependencies.git" "isis3_dependencies" "dev"
+
+#-------------------------------------------------------------------------------
 # ACTUAL PROGRAMS
 #-------------------------------------------------------------------------------
 checkout_branch "https://github.com/lucasz93/BinaryBuilder.git" "BinaryBuilder" "master"
