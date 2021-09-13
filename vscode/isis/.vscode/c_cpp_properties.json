@@ -4,6 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/../../build/inc/**",
+                "${workspaceFolder}/../../../install/include/**",
                 "/home/mechsoft/miniconda3/envs/isis_deps/include/**"
             ],
             "defines": [],

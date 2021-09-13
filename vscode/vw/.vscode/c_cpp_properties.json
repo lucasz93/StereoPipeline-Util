@@ -4,6 +4,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/../**",
+                "${workspaceFolder}/../../../install/include/**",
                 "/home/mechsoft/miniconda3/envs/asp_deps/include/**"
             ],
             "defines": [],

@@ -29,14 +29,14 @@ bash checkout.sh
 # We keep all conda packages up to date.
 #bash make_install.sh conda
 
-bash configure.sh $1 vw
-bash make_install.sh vw
-
 bash configure.sh $1 f2c
 bash make_install.sh f2c
 
 bash make_install.sh cspice_src
 bash make_install.sh cspice
+
+bash configure.sh $1 vw
+bash make_install.sh vw
 
 # Building ISIS is a 2 pass process, for some reason.
 # I think the first configure & build populates build/inc, which allows the second configure to properly generate the install script.

@@ -22,6 +22,9 @@ case $build_type in
 		;;
 esac
 
+debug_info_level="-ggdb3"
+#debug_info_level="-pg"
+
 #===============================================================================
 #===============================================================================
 configure_visionworkbench()
@@ -34,7 +37,7 @@ configure_visionworkbench()
 	  -DASP_DEPS_DIR=$CONDA_PREFIX/envs/asp_deps               \
 	  -DCMAKE_INSTALL_MESSAGE=$installMessage                  \
 	  -DCMAKE_INSTALL_PREFIX=$installDir                       \
-	  -DDEBUG_INFO_LEVEL="-ggdb3"                              \
+	  -DDEBUG_INFO_LEVEL="$debug_info_level"                   \
 	  -DCMAKE_C_COMPILER_LAUNCHER="/usr/bin/ccache"            \
 	  -DCMAKE_CXX_COMPILER_LAUNCHER="/usr/bin/ccache"          \
 	  -DCMAKE_CXX_FLAGS="-fuse-ld=lld"                         \
@@ -59,7 +62,7 @@ configure_isis3()
 	  -DCMAKE_INSTALL_PREFIX=$installDir                        \
 	  -DOVERRIDE_CSPICE_INCLUDE_DIR=$installDir/include         \
 	  -DOVERRIDE_CSPICE_LIB_DIR=$installDir/lib                 \
-	  -DDEBUG_INFO_LEVEL="-ggdb3"                               \
+	  -DDEBUG_INFO_LEVEL="$debug_info_level"                   \
 	  -DCMAKE_C_COMPILER_LAUNCHER="/usr/bin/ccache"             \
 	  -DCMAKE_CXX_COMPILER_LAUNCHER="/usr/bin/ccache"           \
 	  -DUSE_LD="-fuse-ld=lld"                                   \
@@ -97,7 +100,7 @@ configure_stereopipeline()
 	  -DBINARYBUILDER_INSTALL_DIR=$rootDir/BinaryBuilder       \
 	  -DCMAKE_INSTALL_MESSAGE=$installMessage                  \
 	  -DCMAKE_INSTALL_PREFIX=$installDir                       \
-	  -DDEBUG_INFO_LEVEL="-ggdb3"                              \
+	  -DDEBUG_INFO_LEVEL="$debug_info_level"                   \
 	  -DCMAKE_C_COMPILER_LAUNCHER="/usr/bin/ccache"            \
 	  -DCMAKE_CXX_COMPILER_LAUNCHER="/usr/bin/ccache"          \
 	  -DCMAKE_CXX_FLAGS="-fuse-ld=lld"                         \
