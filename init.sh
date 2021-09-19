@@ -38,6 +38,9 @@ bash make_install.sh cspice
 bash configure.sh $1 vw
 bash make_install.sh vw
 
+bash configure.sh $1 ale
+bash make_install.sh $1 ale
+
 # Building ISIS is a 2 pass process, for some reason.
 # I think the first configure & build populates build/inc, which allows the second configure to properly generate the install script.
 bash configure.sh $1 isis

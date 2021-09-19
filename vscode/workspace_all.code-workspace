@@ -1,6 +1,9 @@
 {
 	"folders": [
 		{
+			"path": "../../ale"
+		},
+		{
 			"path": "../../StereoPipeline/src/asp"
 		},
 		{
@@ -14,6 +17,9 @@
 		{
 			"name": "ISIS3",
 			"path": "../../ISIS3/isis/src"
+		},
+		{
+			"path": "../../SpiceyPy/spiceypy"
 		},
 		{
 			"name": "util",
@@ -152,7 +158,14 @@
 			"qstring": "cpp",
 			"qtemporaryfile": "cpp",
 			"qdomdocument": "cpp",
-			"qdomnode": "cpp"
+			"qdomnode": "cpp",
+			"math.h": "c",
+			"fprocs.h": "c",
+			"stdio.h": "c",
+			"regex": "cpp",
+			"hash_map": "cpp",
+			"future": "cpp",
+			"shared_mutex": "cpp"
 		}
 	}
 }

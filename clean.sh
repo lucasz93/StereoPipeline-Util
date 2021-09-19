@@ -45,6 +45,14 @@ clean_cspice()
 
 #===============================================================================
 #===============================================================================
+clean_ale()
+{
+	rm -rf "$rootDir/ale/build"
+}
+
+
+#===============================================================================
+#===============================================================================
 for target in "$@"
 	do
 	case "$target" in
@@ -53,11 +61,13 @@ for target in "$@"
 		"vw" ) clean_visionworkbench ;;
 		"isis" ) clean_isis3 ;;
 		"asp" ) clean_stereopipeline ;;
+		"ale" ) clean_ale ;;
 		"all" )
 			clean_f2c
 			clean_cspice
 			
 			clean_visionworkbench
+			clean_ale
 			clean_isis3
 			clean_stereopipeline
 			
@@ -65,7 +75,7 @@ for target in "$@"
 			;;
 		* ) 
 			echo "clean: Unknown target '$build_type'"
-			echo "./clean.sh [f2c|cspice|vw|isis|asp|all]"
+			echo "./clean.sh [f2c|cspice|vw|isis|asp|ale|all]"
 			exit 1
 			;;
 	esac

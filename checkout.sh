@@ -29,6 +29,12 @@ checkout_branch "https://github.com/lucasz93/cspice-feedstock.git" "cspice-feeds
 #-------------------------------------------------------------------------------
 # CUSTOM COMPILED DEPENDENCIES
 #-------------------------------------------------------------------------------
+checkout_branch "https://github.com/lucasz93/SpiceyPy.git" "SpiceyPy" "2.3_naif_context"
+checkout_branch "https://github.com/lucasz93/spiceypy-feedstock.git" "spiceypy-feedstock" "2.3.2_local"
+
+checkout_branch "https://github.com/lucasz93/ale.git" "ale" "0.8.5-naif_context"
+checkout_branch "https://github.com/lucasz93/ale-feedstock.git" "ale-feedstock" "0.8.5-naif_context"
+
 checkout_branch "https://github.com/lucasz93/isis3_dependencies.git" "isis3_dependencies" "dev"
 
 #-------------------------------------------------------------------------------

@@ -179,6 +179,33 @@ make_deps()
 }
 
 #===============================================================================
+#===============================================================================
+make_ale()
+{	
+	pushd $rootDir/ale
+	
+#	python setup.py install
+	cd build
+	ninja $1 -j `distcc -j`
+	
+	popd
+}
+
+
+#===============================================================================
+#===============================================================================
+make_spiceypy()
+{	
+	pushd $rootDir/ale
+	
+	python setup.py install
+	cd build
+	ninja $1 -j `distcc -j`
+	
+	popd
+}
+
+#===============================================================================
 # $1 = script name
 # $2 = target
 # $3 = directive
@@ -193,6 +220,8 @@ make_project()
 		"isis" ) make_isis3 "$3" ;;
 		"asp" ) make_stereopipeline "$3" ;;
 		"deps" ) make_deps "$3" ;;
+		"ale" ) make_ale "$3" ;;
+		"spiceypy" ) make_spiceypy "$3" ;;
 		"all" )
 			make_f2c "$3"
 			make_cspice "$3"
@@ -205,9 +234,12 @@ make_project()
 			;;
 		* ) 
 			echo "$1: Unknown target '$2'"
-			echo "./$1.sh [f2c|vw|isis|asp|cspice_src|cspice|deps|all]"
+			echo "./$1.sh [f2c|vw|isis|asp|cspice_src|cspice|deps|ale|all]"
 			exit 1
 			;;
 	esac
+	
+	echo ""
+	echo "Remember to './deploy.sh all' if necessary"
 }
 

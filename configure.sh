@@ -60,9 +60,11 @@ configure_isis3()
 	  -Disis3TestData=$ISISTESTDATA                             \
 	  -DCMAKE_INSTALL_MESSAGE=$installMessage                   \
 	  -DCMAKE_INSTALL_PREFIX=$installDir                        \
-	  -DOVERRIDE_CSPICE_INCLUDE_DIR=$installDir/include         \
-	  -DOVERRIDE_CSPICE_LIB_DIR=$installDir/lib                 \
-	  -DDEBUG_INFO_LEVEL="$debug_info_level"                   \
+	  -DCSPICE_INCLUDE_DIR=$installDir/include/cspice           \
+	  -DCSPICE_LIBRARY=$installDir/lib/libcspice.so             \
+	  -DALE_INCLUDE_DIR=$installDir/include/ale                 \
+	  -DALE_LIBRARY=$intsallDir/lib/libale.so                   \
+	  -DDEBUG_INFO_LEVEL="$debug_info_level"                    \
 	  -DCMAKE_C_COMPILER_LAUNCHER="/usr/bin/ccache"             \
 	  -DCMAKE_CXX_COMPILER_LAUNCHER="/usr/bin/ccache"           \
 	  -DUSE_LD="-fuse-ld=lld"                                   \
@@ -111,6 +113,28 @@ configure_stereopipeline()
 
 #===============================================================================
 #===============================================================================
+configure_ale()
+{
+	pushd $rootDir/ale
+	mkdir -p build
+	cd build
+
+	$HOME/miniconda3/envs/asp_deps/bin/cmake .. -GNinja        \
+	  -DCMAKE_INSTALL_MESSAGE=$installMessage                  \
+	  -DCMAKE_INSTALL_PREFIX=$installDir                       \
+	  -DCSPICE_INCLUDE_DIR=$installDir/include/cspice           \
+	  -DCSPICE_LIBRARY=$installDir/lib/libcspice.so             \
+	  -DDEBUG_INFO_LEVEL="$debug_info_level"                   \
+	  -DCMAKE_C_COMPILER_LAUNCHER="/usr/bin/ccache"            \
+	  -DCMAKE_CXX_COMPILER_LAUNCHER="/usr/bin/ccache"          \
+	  -DCMAKE_CXX_FLAGS="-fuse-ld=lld"                         \
+	  $buildType
+
+	popd
+}
+
+#===============================================================================
+#===============================================================================
 configure_f2c()
 {
 	pushd $rootDir/f2c/src
@@ -129,6 +153,7 @@ for target in "$@"
 		"vw" ) configure_visionworkbench "$build_type" ;;
 		"isis" ) configure_isis3 "$build_type" ;;
 		"asp" ) configure_stereopipeline "$build_type" ;;
+		"ale" ) configure_ale "$build_type" ;;
 		"all" )
 			configure_f2c "$build_type"
 			
@@ -138,7 +163,7 @@ for target in "$@"
 			;;
 		* ) 
 			echo "configure: Unknown target '$build_type'"
-			echo "./configure.sh [f2c|vw|isis|asp|all]"
+			echo "./configure.sh [f2c|vw|isis|asp|ale|all]"
 			exit 1
 			;;
 	esac
