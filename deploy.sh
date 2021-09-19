@@ -15,7 +15,7 @@ deploy_cspice()
 	conda activate build_env
 	
 	# Also uploads
-	conda build -c mechsoft ../spiceypy-feedstock/
+	conda build -c mechsoft ../cspice-feedstock/
 
 	conda deactivate
 
