@@ -15,7 +15,7 @@ deploy_cspice()
 	conda activate build_env
 	
 	# Also uploads
-	conda build -c mechsoft ../cspice-feedstock/
+	conda build -c mechsoft -c conda-forge ../cspice-feedstock/
 
 	conda deactivate
 
@@ -32,7 +32,7 @@ deploy_spiceypy()
 	conda activate build_env
 	
 	# Also uploads
-	conda build -c mechsoft ../spiceypy-feedstock/
+	conda build -c mechsoft -c conda-forge ../spiceypy-feedstock/
 
 	conda deactivate
 
@@ -49,7 +49,7 @@ deploy_ale()
 	conda activate build_env
 	
 	# Also uploads
-	conda build -c mechsoft ../ale-feedstock/
+	conda build -c mechsoft -c conda-forge ../ale-feedstock/
 
 	conda deactivate
 
@@ -63,7 +63,7 @@ for target in "$@"
 	case "$target" in
 		"spiceypy" ) deploy_spiceypy ;;
 		"cspice" ) deploy_cspice ;;
-		"ale" ) deploy_spiceypy ;;
+		"ale" ) deploy_ale ;;
 		"all" )
 			deploy_cspice
 			deploy_spiceypy

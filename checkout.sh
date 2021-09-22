@@ -21,9 +21,9 @@ checkout_branch()
 #-------------------------------------------------------------------------------
 # NAIF TOOLKIT
 #-------------------------------------------------------------------------------
-checkout_branch "https://github.com/lucasz93/f2c.git" "f2c" "naif_tls"
+checkout_branch "https://github.com/lucasz93/f2c.git" "f2c" "global-state-object"
 checkout_branch "https://github.com/lucasz93/naif-toolkit.git" "naif-toolkit" "master"
-checkout_branch "https://github.com/lucasz93/cspice.git" "cspice" "dev"
+checkout_branch "https://github.com/lucasz93/cspice.git" "cspice" "libf2c-multithreading"
 checkout_branch "https://github.com/lucasz93/cspice-feedstock.git" "cspice-feedstock" "dev"
 
 #-------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ checkout_branch "https://github.com/lucasz93/isis3_dependencies.git" "isis3_depe
 # ACTUAL PROGRAMS
 #-------------------------------------------------------------------------------
 checkout_branch "https://github.com/lucasz93/BinaryBuilder.git" "BinaryBuilder" "master"
-checkout_branch "https://github.com/lucasz93/visionworkbench.git" "visionworkbench" "2.7.0_turbo"
-checkout_branch "https://github.com/lucasz93/ISIS3.git" "ISIS3" "4.1_turbo"
-checkout_branch "https://github.com/lucasz93/StereoPipeline.git" "StereoPipeline" "2.7.0_turbo"
+checkout_branch "https://github.com/lucasz93/visionworkbench.git" "visionworkbench" "2.7.0_turbo-camera-forking"
+checkout_branch "https://github.com/lucasz93/ISIS3.git" "ISIS3" "4.1_turbo-multithreaded-naif"
+checkout_branch "https://github.com/lucasz93/StereoPipeline.git" "StereoPipeline" "2.7.0_turbo-camera-forking"
 
