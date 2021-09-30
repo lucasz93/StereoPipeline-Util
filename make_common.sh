@@ -3,6 +3,20 @@
 rootDir=`pwd`/..
 installDir=$rootDir/install
 
+source $HOME/miniconda3/etc/profile.d/conda.sh
+
+#===============================================================================
+#===============================================================================
+clear_remote_conda_package_cache()
+{
+	# Clear any packages cached from the real sources. We want to use the local ones.
+	conda activate base
+	rm -rf $CONDA_PREFIX/pkgs/ale*
+	rm -rf $CONDA_PREFIX/pkgs/spiceypy*
+	rm -rf $CONDA_PREFIX/pkgs/cspice*
+	conda deactivate
+}
+
 #===============================================================================
 #===============================================================================
 make_visionworkbench()
@@ -152,14 +166,36 @@ make_cspice_src()
 #===============================================================================
 #===============================================================================
 make_cspice()
-{	
-	pushd $rootDir/cspice-feedstock/recipe
-	
-	rm $installDir/lib/cspice.a
-	rm $installDir/lib/csupport.a
-	rm $installDir/lib/libcspice.so
-	CC="ccache gcc" SRC_DIR=$rootDir/cspice PREFIX=$installDir bash build.sh
-	
+{
+	pushd $rootDir/cspice
+
+	#
+	# Build using dev environment.
+	#
+	conda activate dev
+
+	rm $CONDA_PREFIX/lib/cspice.a
+	rm $CONDA_PREFIX/lib/csupport.a
+	rm $CONDA_PREFIX/lib/libcspice.so
+	conda build ../cspice-feedstock
+
+	BUILD_CACHE_DIR=$CONDA_PREFIX/conda-bld/
+
+	conda deactivate
+
+	#
+	# Install into isis_deps
+	#
+	if [ "$1" = "install" ]; then
+		clear_remote_conda_package_cache
+
+		conda activate isis_dep
+		conda install --override-channels --force-reinstall --no-deps -c $BUILD_CACHE_DIR -c local cspice
+		conda deactivate
+
+		#conda install --no-deps /home/mechsoft/miniconda3/envs/dev/conda-bld/linux-64/ale-0.8.5-py39h2bc3f7f_3.tar.bz2
+	fi
+
 	popd
 }
 
@@ -169,8 +205,7 @@ make_deps()
 {
 	pushd $rootDir/isis3_dependencies
 
-	source $HOME/miniconda3/etc/profile.d/conda.sh
-	conda activate build_env
+	conda activate dev
 	export CPU_COUNT=`nproc`
 	python bin/build_package.py qt -y --user mechsoft
 	conda deactivate
@@ -181,13 +216,28 @@ make_deps()
 #===============================================================================
 #===============================================================================
 make_ale()
-{	
+{
 	pushd $rootDir/ale
-	
-#	python setup.py install
-	cd build
-	ninja $1 -j `distcc -j`
-	
+
+	#
+	# Build using dev environment.
+	#
+	conda activate dev
+	conda build --python=3.6 ../ale-feedstock
+	BUILD_CACHE_DIR=$CONDA_PREFIX/conda-bld/
+	conda deactivate
+
+	#
+	# Install into isis_deps
+	#
+	if [ "$1" = "install" ]; then
+		clear_remote_conda_package_cache
+
+		conda activate isis_deps
+		conda install --override-channels --force-reinstall --no-deps -c $BUILD_CACHE_DIR -c local ale
+		conda deactivate
+	fi
+
 	popd
 }
 
@@ -195,13 +245,28 @@ make_ale()
 #===============================================================================
 #===============================================================================
 make_spiceypy()
-{	
-	pushd $rootDir/ale
-	
-	python setup.py install
-	cd build
-	ninja $1 -j `distcc -j`
-	
+{
+	pushd $rootDir/SpiceyPy
+
+	#
+	# Build using dev environment.
+	#
+	conda activate dev
+	conda build --python=3.9 ../spiceypy-feedstock
+	BUILD_CACHE_DIR=$CONDA_PREFIX/conda-bld
+	conda deactivate
+
+	#
+	# Install into isis_deps
+	#
+	if [ "$1" = "install" ]; then
+		clear_remote_conda_package_cache
+
+		conda activate isis_deps
+		conda install --override-channels --force-reinstall --no-deps -c $BUILD_CACHE_DIR -c local spiceypy
+		conda deactivate
+	fi
+
 	popd
 }
 
@@ -234,7 +299,7 @@ make_project()
 			;;
 		* ) 
 			echo "$1: Unknown target '$2'"
-			echo "./$1.sh [f2c|vw|isis|asp|cspice_src|cspice|deps|ale|all]"
+			echo "./$1.sh [f2c|vw|isis|asp|cspice_src|cspice|deps|ale|spiceypy|all]"
 			exit 1
 			;;
 	esac

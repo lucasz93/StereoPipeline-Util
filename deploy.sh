@@ -12,7 +12,7 @@ deploy_cspice()
 	pushd $rootDir/cspice
 
 	source $HOME/miniconda3/etc/profile.d/conda.sh
-	conda activate build_env
+	conda activate dev
 	
 	# Also uploads
 	conda build -c mechsoft -c conda-forge ../cspice-feedstock/
@@ -29,7 +29,7 @@ deploy_spiceypy()
 	pushd $rootDir/SpiceyPy
 
 	source $HOME/miniconda3/etc/profile.d/conda.sh
-	conda activate build_env
+	conda activate dev
 	
 	# Also uploads
 	conda build -c mechsoft -c conda-forge ../spiceypy-feedstock/
@@ -46,7 +46,7 @@ deploy_ale()
 	pushd $rootDir/ale
 
 	source $HOME/miniconda3/etc/profile.d/conda.sh
-	conda activate build_env
+	conda activate dev
 	
 	# Also uploads
 	conda build -c mechsoft -c conda-forge ../ale-feedstock/
