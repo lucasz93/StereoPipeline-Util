@@ -1,0 +1,13 @@
+#
+# Additional variables for ISIS and ASP.
+#
+export MECHSRC_INSTALL="/mechsrc/install"
+export PATH="$MECHSRC_INSTALL/bin:$PATH"
+export ISISROOT_DEV="$MECHSRC_INSTALL"
+export ISISROOT="$MECHSRC_INSTALL"
+export ISISDATA="/home/mechsoft/data"
+export ISISTESTDATA="/home/mechsoft/testData"
+export ALESPICEROOT="$MECHSRC_INSTALL/aleData"
+export QT_PLUGIN_PATH="/home/mechsoft/miniconda3/envs/asp_deps/"
+export GDAL_DATA="/home/mechsoft/miniconda3/envs/asp_deps/share/"
+export CCACHE_DIR="/ccache"

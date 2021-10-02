@@ -1,7 +1,9 @@
 #===============================================================================
 #===============================================================================
+set -e
+
 rootDir=`pwd`/..
-installDir=$rootDir/install
+installDir=$MECHSRC_INSTALL
 
 source $HOME/miniconda3/etc/profile.d/conda.sh
 
@@ -23,7 +25,7 @@ make_visionworkbench()
 {
 	pushd $rootDir/visionworkbench/build
 
-	ninja $1 -j `distcc -j`
+	ninja $1 -j `nproc`
 
 	popd
 }
@@ -40,7 +42,7 @@ make_isis3()
 
 	source $HOME/miniconda3/etc/profile.d/conda.sh
 	conda activate isis_deps
-	ninja $1 -j `distcc -j`
+	ninja $1 -j `nproc`
 	conda deactivate
 
 	# ISIS installs its headers to /include/isis3, but the conda package is
@@ -58,7 +60,7 @@ make_stereopipeline()
 {
 	pushd $rootDir/StereoPipeline/build
 
-	ninja $1 -j `distcc -j`
+	ninja $1 -j `nproc`
 
 	popd
 }
@@ -168,15 +170,18 @@ make_cspice_src()
 make_cspice()
 {
 	pushd $rootDir/cspice
+	
+	# Conda build fails if this doesn't exist.
+	mkdir -p lib
 
 	#
 	# Build using dev environment.
 	#
 	conda activate dev
 
-	rm $CONDA_PREFIX/lib/cspice.a
-	rm $CONDA_PREFIX/lib/csupport.a
-	rm $CONDA_PREFIX/lib/libcspice.so
+	rm -f $CONDA_PREFIX/lib/cspice.a
+	rm -f $CONDA_PREFIX/lib/csupport.a
+	rm -f $CONDA_PREFIX/lib/libcspice.so
 	conda build ../cspice-feedstock
 
 	BUILD_CACHE_DIR=$CONDA_PREFIX/conda-bld/
@@ -189,11 +194,9 @@ make_cspice()
 	if [ "$1" = "install" ]; then
 		clear_remote_conda_package_cache
 
-		conda activate isis_dep
-		conda install --override-channels --force-reinstall --no-deps -c $BUILD_CACHE_DIR -c local cspice
+		conda activate isis_deps
+		conda install --override-channels --force-reinstall --no-deps -c $BUILD_CACHE_DIR -c local -y cspice
 		conda deactivate
-
-		#conda install --no-deps /home/mechsoft/miniconda3/envs/dev/conda-bld/linux-64/ale-0.8.5-py39h2bc3f7f_3.tar.bz2
 	fi
 
 	popd
@@ -234,7 +237,7 @@ make_ale()
 		clear_remote_conda_package_cache
 
 		conda activate isis_deps
-		conda install --override-channels --force-reinstall --no-deps -c $BUILD_CACHE_DIR -c local ale
+		conda install --override-channels --force-reinstall --no-deps -c $BUILD_CACHE_DIR -c local -y ale
 		conda deactivate
 	fi
 
@@ -263,7 +266,7 @@ make_spiceypy()
 		clear_remote_conda_package_cache
 
 		conda activate isis_deps
-		conda install --override-channels --force-reinstall --no-deps -c $BUILD_CACHE_DIR -c local spiceypy
+		conda install --override-channels --force-reinstall --no-deps -c $BUILD_CACHE_DIR -c local -y spiceypy
 		conda deactivate
 	fi
 

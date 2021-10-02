@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 #
 # StereoPipeline config fails if it can't find the visionworkbench or ISIS binaries.
 # So this script configures and builds everything in the right order.
@@ -38,8 +39,8 @@ bash make_install.sh cspice
 bash configure.sh $1 vw
 bash make_install.sh vw
 
-bash configure.sh $1 ale
-bash make_install.sh $1 ale
+bash make_install.sh spiceypy
+bash make_install.sh ale
 
 # Building ISIS is a 2 pass process, for some reason.
 # I think the first configure & build populates build/inc, which allows the second configure to properly generate the install script.
@@ -56,6 +57,3 @@ pushd vscode
 bash config.sh restore
 popd
 
-# Setup distcc.
-mkdir -p ~/.distcc
-cp distcc/hosts ~/.distcc/

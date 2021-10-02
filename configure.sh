@@ -1,9 +1,10 @@
 #!/bin/bash
+set -e
 
 #===============================================================================
 #===============================================================================
 rootDir=`pwd`/..
-installDir=$rootDir/install
+installDir=$MECHSRC_INSTALL
 
 installMessage=NEVER
 
@@ -94,7 +95,6 @@ configure_stereopipeline()
 	  -DASP_DEPS_DIR=$CONDA_PREFIX/envs/asp_deps               \
 	  -DVISIONWORKBENCH_INSTALL_DIR=$installDir                \
 	  -DISIS_INSTALL_DIR=$installDir                           \
- 	  -DCSPICE_INSTALL_DIR=$installDir                         \
 	  -DBINARYBUILDER_INSTALL_DIR=$rootDir/BinaryBuilder       \
 	  -DCMAKE_INSTALL_MESSAGE=$installMessage                  \
 	  -DCMAKE_INSTALL_PREFIX=$installDir                       \

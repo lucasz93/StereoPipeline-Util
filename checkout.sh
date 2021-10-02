@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/bin/bash
+set -e
+
 buildDir=`pwd`/..
-installDir=$buildDir/install
 cd $buildDir
 
 checkout_branch()
