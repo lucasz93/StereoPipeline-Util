@@ -14,8 +14,8 @@ deploy_cspice()
 	source $HOME/miniconda3/etc/profile.d/conda.sh
 	conda activate dev
 	
-	# Also uploads
 	conda build -c mechsoft -c conda-forge ../cspice-feedstock/
+	anaconda upload $CONDA_PREFIX/conda-bld/linux-64/cspice-66-h7f98852_1014.tar.bz2 --force
 
 	conda deactivate
 
@@ -31,8 +31,8 @@ deploy_spiceypy()
 	source $HOME/miniconda3/etc/profile.d/conda.sh
 	conda activate dev
 	
-	# Also uploads
 	conda build -c mechsoft -c conda-forge ../spiceypy-feedstock/
+	anaconda upload $CONDA_PREFIX/conda-bld/noarch/spiceypy-2.3.2-py_0.tar.bz2 --force
 
 	conda deactivate
 
@@ -48,9 +48,9 @@ deploy_ale()
 	source $HOME/miniconda3/etc/profile.d/conda.sh
 	conda activate dev
 	
-	# Also uploads
 	conda build -c mechsoft -c conda-forge ../ale-feedstock/
-
+	anaconda upload $CONDA_PREFIX/conda-bld/linux-64/ale-0.8.5-py39h1a9c180_3.tar.bz2 --force
+    
 	conda deactivate
 
 	popd

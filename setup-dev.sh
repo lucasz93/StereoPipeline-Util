@@ -20,11 +20,12 @@ cat env/asp >> ~/.bashrc
 # Install miniconda.
 #
 if [ ! -d "$HOME/miniconda3" ]; then
-	cd ~/Downloads
+	pushd ~/Downloads
 	wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 	bash Miniconda3-latest-Linux-x86_64.sh -b
 	eval "$(/home/mechsoft/miniconda3/bin/conda shell.bash hook)"
 	conda init
+	popd
 else
 	source $HOME/miniconda3/etc/profile.d/conda.sh
 fi
@@ -36,10 +37,10 @@ fi
 conda create --name dev -y
 conda activate dev 
 conda config --add channels conda-forge 
-conda install conda-build -y
+conda install conda-build anaconda-client -y
 pip install jinja2 
 # Not needed now that we just do local builds.
-#anaconda login 
+anaconda login 
 conda deactivate 
 
 #

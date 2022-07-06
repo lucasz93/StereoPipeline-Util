@@ -113,7 +113,7 @@ configure_f2c()
 {
 	pushd $rootDir/f2c/src
 	
-	cp makefile.u makefile
+	#cp makefile.u makefile
 
 	popd
 }

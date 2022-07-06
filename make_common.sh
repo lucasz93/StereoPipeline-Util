@@ -197,6 +197,13 @@ make_cspice()
 		conda activate isis_deps
 		conda install --override-channels --force-reinstall --no-deps -c $BUILD_CACHE_DIR -c local -y cspice
 		conda deactivate
+		
+		export PREFIX=$installDir
+		export SRC_DIR=$rootDir/cspice
+		export CC=gcc
+		
+		cd $rootDir/cspice-feedstock/recipe
+		bash build.sh
 	fi
 
 	popd

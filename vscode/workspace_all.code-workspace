@@ -165,7 +165,13 @@
 			"regex": "cpp",
 			"hash_map": "cpp",
 			"future": "cpp",
-			"shared_mutex": "cpp"
+			"shared_mutex": "cpp",
+			"qmetatype": "cpp",
+			"compare": "cpp",
+			"concepts": "cpp",
+			"numbers": "cpp",
+			"semaphore": "cpp",
+			"stop_token": "cpp"
 		}
 	}
 }
