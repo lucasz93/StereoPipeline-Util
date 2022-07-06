@@ -1,15 +1,12 @@
 #!/bin/bash
 set -e
 
-#
-# Install all the packages we'll need.
-#
-apt install build-essential cmake make gcc g++ git tcsh csh parallel lld ccache libgl1-mesa-dev libglu1-mesa-dev ninja-build
+SCRIPT_HOME=`pwd`
 
 #
 # Setup ccache.
 #
-mkdir /ccache
+mkdir -p /ccache
 chown mechsoft /ccache
 ccache -M 25G
 
@@ -48,16 +45,15 @@ conda deactivate
 #
 # Checkout all source code.
 #
+cd $SCRIPT_HOME
 bash checkout.sh
 
 #
 # Setup benchmarking dir.
 #
-mkdir /asp_scratch
-chown mechsoft /asp_scratch
 cd /asp_scratch
 cp -r /mechsrc/nasa/StereoPipeline/examples/* /asp_scratch
-ln /mechsrc/nasa/asp-util/timing/time_mro_ctx.sh CTX/time_mro_ctx.sh
+ln -f /mechsrc/nasa/asp-util/timing/time_mro_ctx.sh CTX/time_mro_ctx.sh
 
 #
 # Install VSCode.
@@ -67,12 +63,12 @@ snap install --classic code
 #
 # Setup ISIS build environment.
 #
-conda env create -n isis_deps -f ../ISIS3/environment.yml --quiet
+conda env create -f $SCRIPT_HOME/../ISIS3/environment.yml -n isis_deps --quiet
 
 #
 # Setup ASP build environment.
 #
-conda env create -f ../StereoPipeline/conda/asp_deps_2.7.0_linux_env.yaml --quiet
+conda env create -f $SCRIPT_HOME/../StereoPipeline/conda/asp_deps_2.7.0_linux_env.yaml --quiet
 conda activate asp_deps
 pushd ~/miniconda3/envs/asp_deps/lib
 mkdir -p  backup
@@ -92,4 +88,5 @@ tar -xvjf glibc-2.31.tar.bz2
 #
 # Build everything.
 #
+cd $SCRIPT_HOME
 bash init.cmd Debug
