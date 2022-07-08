@@ -81,7 +81,6 @@ conda deactivate
 #
 # Create the glibc debug stuff.
 #
-mkdir -p /build/glibc-eX1tMB
 pushd /build/glibc-eX1tMB
 wget http://mirror.lagoon.nc/gnu/libc/glibc-2.31.tar.bz2
 tar -xvjf glibc-2.31.tar.bz2
@@ -90,4 +89,4 @@ tar -xvjf glibc-2.31.tar.bz2
 # Build everything.
 #
 cd $SCRIPT_HOME
-bash init.cmd Debug
+bash init.sh Debug

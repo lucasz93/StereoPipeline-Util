@@ -9,6 +9,8 @@ sudo apt install build-essential cmake make gcc g++ git tcsh csh parallel lld cc
 #
 # Setup the benchmark dir on the NVMe drive.
 #
-mkdir /asp_scratch
+mkdir -p /asp_scratch
 chown mechsoft /asp_scratch
 
+mkdir -p /build/glibc-eX1tMB
+chown mechsoft /build/glibc-eX1tMB

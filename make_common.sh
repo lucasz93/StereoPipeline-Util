@@ -5,6 +5,8 @@ set -e
 rootDir=`pwd`/..
 installDir=$MECHSRC_INSTALL
 
+condaInstallFlags="--offline --override-channels --force-reinstall --no-deps -c local"
+
 source $HOME/miniconda3/etc/profile.d/conda.sh
 
 #===============================================================================
@@ -18,6 +20,7 @@ clear_remote_conda_package_cache()
 	rm -rf $CONDA_PREFIX/pkgs/cspice*
 	conda deactivate
 }
+
 
 #===============================================================================
 #===============================================================================
@@ -179,12 +182,15 @@ make_cspice()
 	#
 	conda activate dev
 
+	BUILD_CACHE_DIR=$CONDA_PREFIX/conda-bld/
+	
+	# Clear old builds.
+	rm -rf $BUILD_CACHE_DIR/linux-64/cspice*
+
 	rm -f $CONDA_PREFIX/lib/cspice.a
 	rm -f $CONDA_PREFIX/lib/csupport.a
 	rm -f $CONDA_PREFIX/lib/libcspice.so
 	conda build ../cspice-feedstock
-
-	BUILD_CACHE_DIR=$CONDA_PREFIX/conda-bld/
 
 	conda deactivate
 
@@ -193,9 +199,9 @@ make_cspice()
 	#
 	if [ "$1" = "install" ]; then
 		clear_remote_conda_package_cache
-
+	
 		conda activate isis_deps
-		conda install --override-channels --force-reinstall --no-deps -c $BUILD_CACHE_DIR -c local -y cspice
+		conda install $condaInstallFlags -c $BUILD_CACHE_DIR -y cspice
 		conda deactivate
 		
 		export PREFIX=$installDir
@@ -233,8 +239,13 @@ make_ale()
 	# Build using dev environment.
 	#
 	conda activate dev
+	
+	BUILD_CACHE_DIR=$CONDA_PREFIX/conda-bld
+	
+	# Clear old builds.
+	rm -rf $BUILD_CACHE_DIR/linux-64/ale*
+	
 	conda build --python=3.6 ../ale-feedstock
-	BUILD_CACHE_DIR=$CONDA_PREFIX/conda-bld/
 	conda deactivate
 
 	#
@@ -242,9 +253,9 @@ make_ale()
 	#
 	if [ "$1" = "install" ]; then
 		clear_remote_conda_package_cache
-
+		
 		conda activate isis_deps
-		conda install --override-channels --force-reinstall --no-deps -c $BUILD_CACHE_DIR -c local -y ale
+		conda install $condaInstallFlags -c $BUILD_CACHE_DIR -y ale
 		conda deactivate
 	fi
 
@@ -262,8 +273,13 @@ make_spiceypy()
 	# Build using dev environment.
 	#
 	conda activate dev
+	
+	BUILD_CACHE_DIR=$CONDA_PREFIX/conda-bld/
+	
+	# Clear old builds.
+	rm -rf $BUILD_CACHE_DIR/noarch/spiceypy*
+	
 	conda build --python=3.9 ../spiceypy-feedstock
-	BUILD_CACHE_DIR=$CONDA_PREFIX/conda-bld
 	conda deactivate
 
 	#
@@ -271,9 +287,9 @@ make_spiceypy()
 	#
 	if [ "$1" = "install" ]; then
 		clear_remote_conda_package_cache
-
+		
 		conda activate isis_deps
-		conda install --override-channels --force-reinstall --no-deps -c $BUILD_CACHE_DIR -c local -y spiceypy
+		conda install $condaInstallFlags -c $BUILD_CACHE_DIR -y spiceypy
 		conda deactivate
 	fi
 
@@ -300,7 +316,9 @@ make_project()
 		"all" )
 			make_f2c "$3"
 			make_cspice "$3"
-		
+			make_ale "$3"
+			make_spiceypy "$3"
+
 			# Order of these is significant.
 			# Each relies on the predecessor.
 			make_visionworkbench "$3"
