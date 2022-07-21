@@ -55,8 +55,8 @@ checkout_branch "https://github.com/lucasz93/cspice-feedstock.git" "https://gith
 checkout_branch "https://github.com/lucasz93/SpiceyPy.git" "https://github.com/AndrewAnnex/SpiceyPy" "SpiceyPy" "2.3_naif_context"
 checkout_branch "https://github.com/lucasz93/spiceypy-feedstock.git" "https://github.com/conda-forge/spiceypy-feedstock" "spiceypy-feedstock" "2.3.2_local"
 
-checkout_branch "https://github.com/lucasz93/ale.git" "https://github.com/USGS-Astrogeology/ale" "ale" "0.8.6-naif_context"
-checkout_branch "https://github.com/lucasz93/ale-feedstock.git" "https://github.com/conda-forge/ale-feedstock" "ale-feedstock" "0.8.6-naif_context"
+checkout_branch "https://github.com/lucasz93/ale.git" "https://github.com/USGS-Astrogeology/ale" "ale" "0.8.5-naif_context"
+checkout_branch "https://github.com/lucasz93/ale-feedstock.git" "https://github.com/conda-forge/ale-feedstock" "ale-feedstock" "0.8.5-naif_context"
 
 #checkout_branch "https://github.com/lucasz93/isis3_dependencies.git" "https://github.com/chrisryancombs/isis3_dependencies" "isis3_dependencies" "dev"
 
