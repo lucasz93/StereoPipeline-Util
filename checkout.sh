@@ -33,8 +33,9 @@ checkout_branch()
 		origin_branch_name=`git remote show origin | sed -n '/HEAD branch/s/.*: //p'`
 		
 		git fetch upstream $upstream_master_branch_name:$origin_branch_name --update-head-ok
+		git fetch upstream --tags
 		git push origin $origin_branch_name
-		git push --tags
+		git push origin --tags
 		
 		popd
 	fi
@@ -54,8 +55,8 @@ checkout_branch "https://github.com/lucasz93/cspice-feedstock.git" "https://gith
 checkout_branch "https://github.com/lucasz93/SpiceyPy.git" "https://github.com/AndrewAnnex/SpiceyPy" "SpiceyPy" "2.3_naif_context"
 checkout_branch "https://github.com/lucasz93/spiceypy-feedstock.git" "https://github.com/conda-forge/spiceypy-feedstock" "spiceypy-feedstock" "2.3.2_local"
 
-checkout_branch "https://github.com/lucasz93/ale.git" "https://github.com/USGS-Astrogeology/ale" "ale" "0.8.5-naif_context"
-checkout_branch "https://github.com/lucasz93/ale-feedstock.git" "https://github.com/conda-forge/ale-feedstock" "ale-feedstock" "0.8.5-naif_context"
+checkout_branch "https://github.com/lucasz93/ale.git" "https://github.com/USGS-Astrogeology/ale" "ale" "0.8.6-naif_context"
+checkout_branch "https://github.com/lucasz93/ale-feedstock.git" "https://github.com/conda-forge/ale-feedstock" "ale-feedstock" "0.8.6-naif_context"
 
 #checkout_branch "https://github.com/lucasz93/isis3_dependencies.git" "https://github.com/chrisryancombs/isis3_dependencies" "isis3_dependencies" "dev"
 
@@ -63,7 +64,7 @@ checkout_branch "https://github.com/lucasz93/ale-feedstock.git" "https://github.
 # ACTUAL PROGRAMS
 #-------------------------------------------------------------------------------
 checkout_branch "https://github.com/lucasz93/BinaryBuilder.git" "https://github.com/NeoGeographyToolkit/BinaryBuilder" "BinaryBuilder" "master"
-checkout_branch "https://github.com/lucasz93/visionworkbench.git" "https://github.com/visionworkbench/visionworkbench" "visionworkbench" "2.7.0_turbo-camera-forking"
-checkout_branch "https://github.com/lucasz93/ISIS3.git" "https://github.com/USGS-Astrogeology/ISIS3" "ISIS3" "4.1_turbo-multithreaded-naif"
-checkout_branch "https://github.com/lucasz93/StereoPipeline.git" "https://github.com/NeoGeographyToolkit/StereoPipeline" "StereoPipeline" "2.7.0_turbo-camera-forking"
+checkout_branch "https://github.com/lucasz93/visionworkbench.git" "https://github.com/visionworkbench/visionworkbench" "visionworkbench" "3.1.0_turbo-camera-forking"
+checkout_branch "https://github.com/lucasz93/ISIS3.git" "https://github.com/USGS-Astrogeology/ISIS3" "ISIS3" "6.0.0_turbo-multithreaded-naif"
+checkout_branch "https://github.com/lucasz93/StereoPipeline.git" "https://github.com/NeoGeographyToolkit/StereoPipeline" "StereoPipeline" "3.1.0_turbo-camera-forking"
 
